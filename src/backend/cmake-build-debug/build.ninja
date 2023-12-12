@@ -49,8 +49,8 @@ cmake_ninja_workdir = C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/s
 
 build cmake_object_order_depends_target_backend: phony || CMakeFiles/backend.dir
 
-build CMakeFiles/backend.dir/heap.cpp.obj: CXX_COMPILER__backend_unscanned_Debug C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/heap.cpp || cmake_object_order_depends_target_backend
-  DEP_FILE = CMakeFiles\backend.dir\heap.cpp.obj.d
+build CMakeFiles/backend.dir/min-heap.cpp.obj: CXX_COMPILER__backend_unscanned_Debug C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/min-heap.cpp || cmake_object_order_depends_target_backend
+  DEP_FILE = CMakeFiles\backend.dir\min-heap.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -IC:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/.
   OBJECT_DIR = CMakeFiles\backend.dir
@@ -77,8 +77,15 @@ build CMakeFiles/backend.dir/huffman-tree.cpp.obj: CXX_COMPILER__backend_unscann
   OBJECT_DIR = CMakeFiles\backend.dir
   OBJECT_FILE_DIR = CMakeFiles\backend.dir
 
-build CMakeFiles/backend.dir/element-node.cpp.obj: CXX_COMPILER__backend_unscanned_Debug C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/element-node.cpp || cmake_object_order_depends_target_backend
-  DEP_FILE = CMakeFiles\backend.dir\element-node.cpp.obj.d
+build CMakeFiles/backend.dir/huffman-node.cpp.obj: CXX_COMPILER__backend_unscanned_Debug C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/huffman-node.cpp || cmake_object_order_depends_target_backend
+  DEP_FILE = CMakeFiles\backend.dir\huffman-node.cpp.obj.d
+  FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
+  INCLUDES = -IC:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/.
+  OBJECT_DIR = CMakeFiles\backend.dir
+  OBJECT_FILE_DIR = CMakeFiles\backend.dir
+
+build CMakeFiles/backend.dir/TestFile.cpp.obj: CXX_COMPILER__backend_unscanned_Debug C$:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/TestFile.cpp || cmake_object_order_depends_target_backend
+  DEP_FILE = CMakeFiles\backend.dir\TestFile.cpp.obj.d
   FLAGS = -g -std=gnu++14 -fdiagnostics-color=always
   INCLUDES = -IC:/Users/YoungZM/Source/WebstormProjects/huffman-coding/src/backend/.
   OBJECT_DIR = CMakeFiles\backend.dir
@@ -92,7 +99,7 @@ build CMakeFiles/backend.dir/element-node.cpp.obj: CXX_COMPILER__backend_unscann
 #############################################
 # Link the executable backend.exe
 
-build backend.exe: CXX_EXECUTABLE_LINKER__backend_Debug CMakeFiles/backend.dir/heap.cpp.obj CMakeFiles/backend.dir/huffman-decoding.cpp.obj CMakeFiles/backend.dir/huffman-encoding.cpp.obj CMakeFiles/backend.dir/huffman-tree.cpp.obj CMakeFiles/backend.dir/element-node.cpp.obj
+build backend.exe: CXX_EXECUTABLE_LINKER__backend_Debug CMakeFiles/backend.dir/min-heap.cpp.obj CMakeFiles/backend.dir/huffman-decoding.cpp.obj CMakeFiles/backend.dir/huffman-encoding.cpp.obj CMakeFiles/backend.dir/huffman-tree.cpp.obj CMakeFiles/backend.dir/huffman-node.cpp.obj CMakeFiles/backend.dir/TestFile.cpp.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\backend.dir

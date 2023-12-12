@@ -5,14 +5,14 @@
 #ifndef HEAP_H
 #define HEAP_H
 
-#include "element-node.h"
+#include "huffman-node.h"
 
 class MinHeap {
 private:
     int size;
     int capacity;
 
-    Node *elements;
+    HuffmanNode *elements;
 
     static int getLeftChildIndex(int index);
 
@@ -20,33 +20,31 @@ private:
 
     static int getParentIndex(int index);
 
+    void init();
+
     void shiftUp(int start);
 
     void shiftDown(int start);
 
 
 public:
-    MinHeap(int capacity);
+    explicit MinHeap(int capacity);
 
     MinHeap(const MinHeap &heap);
 
     ~MinHeap();
 
-    void init();
-
     bool isEmpty() const;
 
     bool isFull() const;
 
-    void push(const Node &node);
+    void push(const HuffmanNode &node);
 
-    Node peak() const;
+    HuffmanNode peak() const;
 
     void pop();
 
-    friend class HuffmanTree;
-
-
+    int getSize() const;
 };
 
 #endif //HEAP_H

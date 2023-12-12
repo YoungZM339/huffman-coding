@@ -4,5 +4,11 @@
 
 #ifndef HUFFMAN_ENCODING_H
 #define HUFFMAN_ENCODING_H
+
 #include "huffman-tree.h"
+
+std::unordered_map<char, std::string> getEncodingTable(const std::string &str);
+
+std::string getEncodingString(const std::string &str);
+
 #endif //HUFFMAN_ENCODING_H

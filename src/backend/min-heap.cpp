@@ -2,19 +2,19 @@
 // Created by YoungZM on 2023/12/12.
 //
 
-#include "heap.h"
+#include "min-heap.h"
 #include <stdexcept>
 
 MinHeap::MinHeap(int capacity) {
     this->size = 0;
     this->capacity = capacity;
-    this->elements = new Node[capacity];
+    this->elements = new HuffmanNode[capacity];
 }
 
 MinHeap::MinHeap(const MinHeap &heap) {
     this->size = heap.size;
     this->capacity = heap.capacity;
-    this->elements = new Node[capacity];
+    this->elements = new HuffmanNode[capacity];
     for (int i = 0; i < size; i++) {
         this->elements[i] = heap.elements[i];
     }
@@ -38,7 +38,7 @@ int MinHeap::getParentIndex(int index) {
 
 void MinHeap::shiftUp(int start) {
     int parent = getParentIndex(start);
-    Node temp = elements[start];
+    HuffmanNode temp = elements[start];
     while (start > 0) {
         if (elements[parent] < temp) {
             break;
@@ -62,7 +62,7 @@ void MinHeap::shiftDown(int start) {
         smallest = right;
     }
     if (smallest != start) {
-        Node temp = elements[start];
+        HuffmanNode temp = elements[start];
         elements[start] = elements[smallest];
         elements[smallest] = temp;
         shiftDown(smallest);
@@ -84,7 +84,7 @@ bool MinHeap::isEmpty() const {
 }
 
 
-void MinHeap::push(const Node &node) {
+void MinHeap::push(const HuffmanNode &node) {
     if (isFull()) {
         throw std::out_of_range("Heap is full!");
     }
@@ -93,7 +93,7 @@ void MinHeap::push(const Node &node) {
     size++;
 }
 
-Node MinHeap::peak() const {
+HuffmanNode MinHeap::peak() const {
     if (isEmpty()) {
         throw std::out_of_range("Heap is empty!");
     }
@@ -109,3 +109,6 @@ void MinHeap::pop() {
     shiftDown(0);
 }
 
+int MinHeap::getSize() const {
+    return size;
+}

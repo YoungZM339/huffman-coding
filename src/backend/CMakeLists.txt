@@ -6,14 +6,15 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(backend
-        heap.cpp
-        heap.h
+        min-heap.cpp
+        min-heap.h
         huffman-decoding.cpp
         huffman-decoding.h
         huffman-encoding.cpp
         huffman-encoding.h
         huffman-tree.cpp
         huffman-tree.h
-        element-node.cpp
-        element-node.h
+        huffman-node.cpp
+        huffman-node.h
+        TestFile.cpp
 )
