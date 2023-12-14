@@ -25,6 +25,8 @@ struct Compare {
 
 HuffmanNode *buildHuffmanTree(const std::unordered_map<char, int> &frequency_map);
 
-void generateEncodingTable(HuffmanNode *root, const std::string& code, std::unordered_map<char, std::string> &encoding_table);
+void generatingEncodingTable(HuffmanNode *root, const std::string &code,
+                             std::unordered_map<char, std::string> &encoding_table);
+
 
 #endif //BACKEND_HUFFMAN_TREE_H

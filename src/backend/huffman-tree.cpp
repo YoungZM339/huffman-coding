@@ -33,7 +33,8 @@ HuffmanNode *buildHuffmanTree(const std::unordered_map<char, int> &freqMap) {
     return minHeap.top();
 }
 
-void generateEncodingTable(HuffmanNode *root, const std::string& code, std::unordered_map<char, std::string> &encoding_table) {
+void generatingEncodingTable(HuffmanNode *root, const std::string &code,
+                             std::unordered_map<char, std::string> &encoding_table) {
     if (root == nullptr) {
         return;
     }
@@ -42,6 +43,8 @@ void generateEncodingTable(HuffmanNode *root, const std::string& code, std::unor
         encoding_table[root->data] = code;
     }
 
-    generateEncodingTable(root->left, code + "0", encoding_table);
-    generateEncodingTable(root->right, code + "1", encoding_table);
+    generatingEncodingTable(root->left, code + "0", encoding_table);
+    generatingEncodingTable(root->right, code + "1", encoding_table);
 }
+
+

@@ -10,6 +10,9 @@
     <Filter Include="..">
       <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..">
+      <UniqueIdentifier>{739DB09A-CC57-A953-A6CF-F64FA08E4FA7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="C:">
       <UniqueIdentifier>{7B735499-E5DD-1C2B-6C26-70023832A1CF}</UniqueIdentifier>
     </Filter>
@@ -61,6 +64,9 @@
       <Filter>..</Filter>
     </ClCompile>
     <ClCompile Include="..\huffman-tree.cpp">
+      <Filter>..</Filter>
+    </ClCompile>
+    <ClCompile Include="..\addon.cpp">
       <Filter>..</Filter>
     </ClCompile>
     <ClCompile Include="C:\Users\YoungZM\AppData\Local\pnpm\global\5\.pnpm\node-gyp@10.0.1\node_modules\node-gyp\src\win_delay_load_hook.cc">
