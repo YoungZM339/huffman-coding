@@ -1,74 +1,40 @@
-import React, { useState } from "react";
-import { Button, Form, FormControl, Container } from "react-bootstrap";
+import React from "react";
+import { Container, Row, Col, Image } from "react-bootstrap";
+import HuffmanImg from "../../../../resources/540px-Huffman_coding_visualisation.svg.png";
 
-function HuffmanCoding() {
-  const [inputText, setInputText] = useState("");
-  const [encodedText, setEncodedText] = useState("");
-  const [decodedText, setDecodedText] = useState("");
-
-  const handleEncode = () => {
-    // 在这里实现根据字符频率生成哈夫曼编码的逻辑
-    // 将编码后的文本保存到 encodedText 状态中
-  };
-
-  const handleDecode = () => {
-    // 在这里实现根据哈夫曼码表解码文件的逻辑
-    // 将解码后的文本保存到 decodedText 状态中
-  };
-
-  const handleSaveEncodedFile = () => {
-    // 在这里实现保存编码后的文件的逻辑
-  };
-
-  const handleSaveDecodedFile = () => {
-    // 在这里实现保存解码后的文件的逻辑
-  };
-
+function HuffmanWelcome() {
   return (
     <Container>
-      <Form>
-        <Form.Group controlId="inputText">
-          <Form.Label>输入文本</Form.Label>
-          <FormControl
-            as="textarea"
-            rows={3}
-            value={inputText}
-            onChange={(e) => setInputText(e.target.value)}
-          />
-        </Form.Group>
-        <Button variant="primary" onClick={handleEncode}>
-          编码
-        </Button>
-        <Button variant="primary" onClick={handleDecode}>
-          解码
-        </Button>
-        <Button variant="secondary" onClick={handleSaveEncodedFile}>
-          保存编码文件
-        </Button>
-        <Button variant="secondary" onClick={handleSaveDecodedFile}>
-          保存解码文件
-        </Button>
-        <Form.Group controlId="encodedText">
-          <Form.Label>编码后的文本</Form.Label>
-          <FormControl
-            as="textarea"
-            rows={3}
-            value={encodedText}
-            readOnly
-          />
-        </Form.Group>
-        <Form.Group controlId="decodedText">
-          <Form.Label>解码后的文本</Form.Label>
-          <FormControl
-            as="textarea"
-            rows={3}
-            value={decodedText}
-            readOnly
-          />
-        </Form.Group>
-      </Form>
+      <Row className="justify-content-center">
+        <Col>
+          <h1>Huffman Encoding & Decoding</h1>
+          <Image src={HuffmanImg} thumbnail={true} />
+          <p>
+            Welcome to the Huffman Encoding and Decoding Tool!
+          </p>
+          <p>
+            Huffman coding is a popular algorithm used for lossless data
+            compression. It assigns variable-length codes to input characters,
+            with shorter codes for more frequent characters, resulting in
+            efficient compression.
+          </p>
+          <p>
+            This tool allows you to encode and decode messages using the Huffman
+            algorithm. To get started, click on the buttons on the left to
+            choose the functionality you'd like to use.
+          </p>
+          <p>
+            If you are unfamiliar with Huffman coding, you can google for more information on how it
+            works and its applications.
+          </p>
+          <p>
+            Welcome to Huffman encoding and decoding tools! Please click the button on the left to select the function
+            you want to use.
+          </p>
+        </Col>
+      </Row>
     </Container>
   );
 }
 
-export default HuffmanCoding;
+export default HuffmanWelcome;

@@ -1,37 +1,43 @@
-import { app, shell, BrowserWindow } from 'electron'
-import { join } from 'path'
-import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import icon from '../../resources/icon.png?asset'
+import { app, BrowserWindow, ipcMain, shell } from "electron";
+import { join } from "path";
+import { electronApp, is, optimizer } from "@electron-toolkit/utils";
+import icon from "../../resources/icon.png?asset";
+
+const addon = require(join(__dirname, "../../resources/addon.node"));
+const { dialog } = require("electron");
+const fs = require("fs");
+
+let mainWindow;
 
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
-    width: 900,
-    height: 670,
+  mainWindow = new BrowserWindow({
+    width: 1080,
+    height: 720,
     show: false,
     autoHideMenuBar: true,
-    ...(process.platform === 'linux' ? { icon } : {}),
+    ...(process.platform === "linux" ? { icon } : {}),
     webPreferences: {
-      preload: join(__dirname, '../preload/index.js'),
+      preload: join(__dirname, "../preload/index.js"),
       sandbox: false
     }
-  })
+  });
 
-  mainWindow.on('ready-to-show', () => {
-    mainWindow.show()
-  })
+  mainWindow.on("ready-to-show", () => {
+    mainWindow.show();
+  });
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
-    shell.openExternal(details.url)
-    return { action: 'deny' }
-  })
+    shell.openExternal(details.url);
+    return { action: "deny" };
+  });
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  if (is.dev && process.env["ELECTRON_RENDERER_URL"]) {
+    mainWindow.loadURL(process.env["ELECTRON_RENDERER_URL"]);
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    mainWindow.loadFile(join(__dirname, "../renderer/index.html"));
   }
 }
 
@@ -40,32 +46,83 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   // Set app user model id for windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId("com.electron");
 
   // Default open or close DevTools by F12 in development
   // and ignore CommandOrControl + R in production.
   // see https://github.com/alex8088/electron-toolkit/tree/master/packages/utils
-  app.on('browser-window-created', (_, window) => {
-    optimizer.watchWindowShortcuts(window)
-  })
+  app.on("browser-window-created", (_, window) => {
+    optimizer.watchWindowShortcuts(window);
+  });
 
-  createWindow()
+  createWindow();
 
-  app.on('activate', function () {
+  app.on("activate", function () {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-})
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
+  });
+
+  ipcMain.handle("get-encoding-table", (event, str) => {
+    return addon.getEncodingTable(str);
+  });
+
+  ipcMain.handle("compress-data", (event, str, encodingTable) => {
+    return addon.compressData(str, encodingTable);
+  });
+
+  ipcMain.handle("decompress-data", (event, compressedData, encodingTable) => {
+    return addon.decompressData(compressedData, encodingTable);
+  });
+
+  ipcMain.on("download-encoding-table", (event, jsonString) => {
+    saveEncodingTable(jsonString);
+  });
+
+  ipcMain.handle("upload-encoding-table", (event) => {
+    return uploadEncodingTable();
+  });
+});
 
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
+app.on("window-all-closed", () => {
+  if (process.platform !== "darwin") {
+    app.quit();
   }
-})
+});
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+function saveEncodingTable(jsonString) {
+  const filePath = dialog.showSaveDialogSync(mainWindow, {
+    title: "Save Encoding Table",
+    defaultPath: "encodingTable.json",
+    filters: [{ name: "JSON Files", extensions: ["json"] }],
+  });
+
+  if (filePath) {
+    try {
+      fs.writeFileSync(filePath, jsonString);
+    } catch (error) {
+      console.error("Error saving encoding table:", error);
+    }
+  }
+}
+
+function uploadEncodingTable() {
+  const filePath = dialog.showOpenDialogSync(mainWindow, {
+    title: "Upload Encoding Table",
+    defaultPath: "encodingTable.json",
+    filters: [{ name: "JSON Files", extensions: ["json"] }],
+  });
+
+  if (filePath) {
+    try {
+      return fs.readFileSync(filePath[0], "utf8");
+    } catch (error) {
+      console.error("Error uploading encoding table:", error);
+    }
+  }
+}
