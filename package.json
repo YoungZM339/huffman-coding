@@ -1,5 +1,6 @@
 {
   "name": "huffman-coding",
+  "productName": "huffman-coding",
   "version": "1.0.0",
   "description": "An Electron application with React for Huffman Coding",
   "main": "./out/main/index.js",
