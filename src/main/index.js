@@ -57,7 +57,7 @@ app.whenReady().then(() => {
 
   createWindow();
 
-  app.on("activate", function () {
+  app.on("activate", function() {
     // On macOS it's common to re-create a window in the app when the
     // dock icon is clicked and there are no other windows open.
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
@@ -82,6 +82,14 @@ app.whenReady().then(() => {
   ipcMain.handle("upload-encoding-table", (event) => {
     return uploadEncodingTable();
   });
+
+  ipcMain.on("download-text-file", (event, jsonString) => {
+    downloadTextFile(jsonString);
+  });
+
+  ipcMain.handle("upload-text-file", (event) => {
+    return uploadTextFile();
+  });
 });
 
 // Quit when all windows are closed, except on macOS. There, it's common
@@ -95,16 +103,16 @@ app.on("window-all-closed", () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
-function saveEncodingTable(jsonString) {
+function saveEncodingTable(json_string) {
   const filePath = dialog.showSaveDialogSync(mainWindow, {
     title: "Save Encoding Table",
-    defaultPath: "encodingTable.json",
-    filters: [{ name: "JSON Files", extensions: ["json"] }],
+    defaultPath: "EncodingTable.json",
+    filters: [{ name: "JSON Files", extensions: ["json"] }]
   });
 
   if (filePath) {
     try {
-      fs.writeFileSync(filePath, jsonString);
+      fs.writeFileSync(filePath, json_string);
     } catch (error) {
       console.error("Error saving encoding table:", error);
     }
@@ -114,8 +122,8 @@ function saveEncodingTable(jsonString) {
 function uploadEncodingTable() {
   const filePath = dialog.showOpenDialogSync(mainWindow, {
     title: "Upload Encoding Table",
-    defaultPath: "encodingTable.json",
-    filters: [{ name: "JSON Files", extensions: ["json"] }],
+    defaultPath: "EncodingTable.json",
+    filters: [{ name: "JSON Files", extensions: ["json"] }]
   });
 
   if (filePath) {
@@ -123,6 +131,38 @@ function uploadEncodingTable() {
       return fs.readFileSync(filePath[0], "utf8");
     } catch (error) {
       console.error("Error uploading encoding table:", error);
+    }
+  }
+}
+
+function uploadTextFile() {
+  const filePath = dialog.showOpenDialogSync(mainWindow, {
+    title: "Upload Text File",
+    defaultPath: "TextFile.txt",
+    filters: [{ name: "Text Files", extensions: ["txt"] }]
+  });
+
+  if (filePath) {
+    try {
+      return fs.readFileSync(filePath[0], "utf8");
+    } catch (error) {
+      console.error("Error uploading encoding table:", error);
+    }
+  }
+}
+
+function downloadTextFile(pure_string) {
+  const filePath = dialog.showSaveDialogSync(mainWindow, {
+    title: "Download Text File",
+    defaultPath: "TextFile.txt",
+    filters: [{ name: "Text Files", extensions: ["txt"] }]
+  });
+
+  if (filePath) {
+    try {
+      fs.writeFileSync(filePath, pure_string);
+    } catch (error) {
+      console.error("Error saving encoding table:", error);
     }
   }
 }

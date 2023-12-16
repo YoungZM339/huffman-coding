@@ -60,6 +60,22 @@ contextBridge.exposeInMainWorld("huffmanAPI", {
       console.error("Error invoking uploadEncodingTable:", error);
       throw error;
     }
+  },
+  saveTextFile: (pure_string) => {
+    try {
+      return ipcRenderer.send("download-text-file", pure_string);
+    } catch (error) {
+      console.error("Error invoking downloadTextFile:", error);
+      throw error;
+    }
+  },
+  uploadTextFile: async () => {
+    try {
+      return await ipcRenderer.invoke("upload-text-file");
+    } catch (error) {
+      console.error("Error invoking uploadTextFile:", error);
+      throw error;
+    }
   }
 });
 

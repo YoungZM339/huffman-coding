@@ -5,9 +5,12 @@
       "cflags!": ["-fno-exceptions"],
       "cflags_cc!": ["-fno-exceptions"],
       "sources": [
-        "huffman-decoding.cpp",
-        "huffman-encoding.cpp",
+        "huffman-tree.h",
+        "huffman-min-heap.h",
+        "huffman-min-heap.cpp",
         "huffman-tree.cpp",
+        "huffman-encoding.cpp",
+        "huffman-decoding.cpp",
         "addon.cpp"
       ],
       "include_dirs": [

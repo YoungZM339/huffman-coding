@@ -5,6 +5,7 @@
 #include <iostream>
 #include "huffman-encoding.h"
 #include "huffman-decoding.h"
+#include "huffman-min-heap.h"
 
 int main() {
     std::string data = "Hello World, I am YoungZM!";
@@ -14,5 +15,4 @@ int main() {
     std::string decompressed_data = decompressData(compressed_data, encoding_table);
     std::cout << "Decompressed data: " << decompressed_data << std::endl;
     return 0;
-
 }

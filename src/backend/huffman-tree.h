@@ -17,12 +17,6 @@ struct HuffmanNode {
     HuffmanNode(char d, int freq) : data(d), frequency(freq), left(nullptr), right(nullptr) {}
 };
 
-struct Compare {
-    bool operator()(const HuffmanNode *a, const HuffmanNode *b) {
-        return a->frequency > b->frequency;
-    }
-};
-
 HuffmanNode *buildHuffmanTree(const std::unordered_map<char, int> &frequency_map);
 
 void generatingEncodingTable(HuffmanNode *root, const std::string &code,

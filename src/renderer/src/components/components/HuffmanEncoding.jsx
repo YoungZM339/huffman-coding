@@ -20,11 +20,28 @@ function HuffmanEncoding() {
   };
 
   const handleDownload = () => {
-    const jsonString = JSON.stringify(encodingTable, null, 2);
+    const json_string = JSON.stringify(encodingTable, null, 2);
     try {
-      window.huffmanAPI.saveEncodingTable(jsonString);
+      window.huffmanAPI.saveEncodingTable(json_string);
     } catch (error) {
       console.error("Error saveEncodingTable:", error);
+    }
+  };
+
+  const handleUploadTextFile = async () => {
+    try {
+      const textResponse = await window.huffmanAPI.uploadTextFile();
+      setInputText(textResponse);
+    } catch (error) {
+      console.error("Error uploadTextFile:", error);
+    }
+  };
+
+  const handleDownloadTextFile = () => {
+    try {
+      window.huffmanAPI.saveTextFile(encodedText);
+    } catch (error) {
+      console.error("Error saveTextFile:", error);
     }
   };
 
@@ -32,7 +49,7 @@ function HuffmanEncoding() {
     <Container>
       <h1>Huffman Encoding</h1>
       <Form>
-        <Form.Group controlId="inputText" className={"mb-3"}>
+        <Form.Group controlId="inputText" className={"m-3"}>
           <Form.Label>Input Text</Form.Label>
           <FormControl
             as="textarea"
@@ -40,22 +57,32 @@ function HuffmanEncoding() {
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
           />
+          <Button variant="primary" onClick={handleUploadTextFile} className={"m-3"} disabled={inputText !== ""}>
+            Upload
+          </Button>
+          <Button variant="primary" onClick={handleEncode} className={"m-3"} disabled={inputText === ""}>
+            Encode
+          </Button>
         </Form.Group>
-        <Button variant="primary" onClick={handleEncode} className={"mb-3"}>
-          Encode
-        </Button>
 
-        <Form.Group controlId="encodedText" className={"mb-3"}>
+
+        <Form.Group controlId="encodedText" className={"m-3"}>
           <Form.Label>Encoded Code</Form.Label>
           <FormControl as="textarea" rows={3} value={encodedText} readOnly />
+          <Button variant="primary" onClick={handleDownloadTextFile} className={"m-3"} disabled={encodedText === ""}>
+            Download
+          </Button>
         </Form.Group>
 
         {encodingTable && (
           <div>
-            <Form.Group controlId="encodingTable" className={"mb-3"}>
+            <Form.Group controlId="encodingTable" className={"m-3"}>
               <Form.Label>Encoding Table</Form.Label>
               <Table bordered>
                 <thead>
+                <Button variant="success" onClick={handleDownload} className={"m-3"}>
+                  Download
+                </Button>
                 <tr>
                   <th>Key</th>
                   <th>Value</th>
@@ -71,9 +98,6 @@ function HuffmanEncoding() {
                 </tbody>
               </Table>
             </Form.Group>
-            <Button variant="success" onClick={handleDownload} className={"mb-3"}>
-              Download
-            </Button>
           </div>
         )}
       </Form>

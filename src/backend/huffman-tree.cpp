@@ -3,34 +3,32 @@
 //
 
 #include "huffman-tree.h"
-#include <iostream>
-#include <queue>
+#include "huffman-min-heap.h"
 #include <unordered_map>
 
-using namespace std;
+HuffmanNode *buildHuffmanTree(const std::unordered_map<char, int> &frequency_map) {
+    MinHeap min_heap;
 
-HuffmanNode *buildHuffmanTree(const std::unordered_map<char, int> &freqMap) {
-    priority_queue<HuffmanNode *, vector<HuffmanNode *>, Compare> minHeap;
-
-    for (const auto &entry: freqMap) {
-        HuffmanNode *node = new HuffmanNode(entry.first, entry.second);
-        minHeap.push(node);
+    for (const auto &single_map: frequency_map) {
+        HuffmanNode *node = new HuffmanNode(single_map.first, single_map.second);
+        min_heap.push(node);
     }
 
-    while (minHeap.size() > 1) {
-        HuffmanNode *leftNode = minHeap.top();
-        minHeap.pop();
-        HuffmanNode *rightNode = minHeap.top();
-        minHeap.pop();
+    while (min_heap.getSize() > 1) {
+        HuffmanNode *leftNode = min_heap.top();
+        min_heap.pop();
+        HuffmanNode *rightNode = min_heap.top();
+        min_heap.pop();
 
         HuffmanNode *newNode = new HuffmanNode('$', leftNode->frequency + rightNode->frequency);
         newNode->left = leftNode;
         newNode->right = rightNode;
 
-        minHeap.push(newNode);
+        min_heap.push(newNode);
     }
 
-    return minHeap.top();
+    HuffmanNode *root = min_heap.top();
+    return root;
 }
 
 void generatingEncodingTable(HuffmanNode *root, const std::string &code,
@@ -46,5 +44,3 @@ void generatingEncodingTable(HuffmanNode *root, const std::string &code,
     generatingEncodingTable(root->left, code + "0", encoding_table);
     generatingEncodingTable(root->right, code + "1", encoding_table);
 }
-
-
